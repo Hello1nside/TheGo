@@ -1,15 +1,27 @@
-// Clock1 is a TCP server that periodically displays the time with goroutine for each client.
+// Clock2 is a TCP server that periodically displays the time with parallel connection processing.
 package main
 
 import (
+	"fmt"
 	"io"
 	"log"
 	"net"
+	"strconv"
 	"time"
 )
 
 func main() {
-	listener, err := net.Listen("tcp", "localhost:8005")
+	// reader := bufio.NewReader(os.Stdin)
+	// fmt.Print("Enter port number: ")
+	// port, _ := reader.ReadString('\n')
+	var port int
+	fmt.Print("Enter port number: ")
+	_, err := fmt.Scanf("%d", &port)
+	if err != nil {
+		log.Print(err)
+	}
+
+	listener, err := net.Listen("tcp", "localhost:"+strconv.Itoa(port))
 	if err != nil {
 		log.Fatal(err)
 	}
